@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar.OnSeekBarChangeListener customSeekBarListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+            currentCustomPercent = progress;
+            updateCustom();
         }
 
         @Override
@@ -88,4 +89,34 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
+
+    private void updateStandard() {
+        double tenPercentTip = currentTotalBill * .10;
+        double tenPercentTotal = currentTotalBill * tenPercentTip;
+
+        double fifteenPercentTip = currentTotalBill * .10;
+        double fifteenPercentTotal = currentTotalBill * fifteenPercentTip;
+
+        double twentyPercentTip = currentTotalBill * .10;
+        double twentyPercentTotal = currentTotalBill * twentyPercentTip;
+
+        tipTenEditText.setText(String.format("%.02f", tenPercentTip));
+        tipTenEditText.setText(String.format("%.02f", tenPercentTotal));
+
+        tipFifteenEditText.setText(String.format("%.02f", fifteenPercentTip));
+        tipFifteenEditText.setText(String.format("%.02f", fifteenPercentTotal));
+
+        tipTwentyEditText.setText(String.format("%.02f", twentyPercentTip));
+        tipTwentyEditText.setText(String.format("%.02f", twentyPercentTotal));
+    }
+
+    private void updateCustom() {
+        customTipTextView.setText(currentCustomPercent + "%");
+
+        double customTipAmount = currentTotalBill * currentCustomPercent * .01;
+        double customTotalAmount = currentTotalBill + customTipAmount;
+
+        tipCustomEditText.setText(String.format("%.02f", customTipAmount));
+        totalCustomEditText.setText(String.format("%.02f", customTotalAmount));
+    }
 }
