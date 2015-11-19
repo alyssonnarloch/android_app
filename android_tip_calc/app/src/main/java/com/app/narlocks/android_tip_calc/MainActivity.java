@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     private double currentTotalBill;
@@ -63,7 +65,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+            try {
+                currentTotalBill = Double.parseDouble(s.toString());
+            } catch (NumberFormatException ex) {
+                currentTotalBill = 0.0;
+            }
+            updateCustom();
+            updateStandard();
         }
 
         @Override
@@ -92,22 +100,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateStandard() {
         double tenPercentTip = currentTotalBill * .10;
-        double tenPercentTotal = currentTotalBill * tenPercentTip;
+        double tenPercentTotal = currentTotalBill + tenPercentTip;
 
-        double fifteenPercentTip = currentTotalBill * .10;
-        double fifteenPercentTotal = currentTotalBill * fifteenPercentTip;
+        double fifteenPercentTip = currentTotalBill * .15;
+        double fifteenPercentTotal = currentTotalBill + fifteenPercentTip;
 
-        double twentyPercentTip = currentTotalBill * .10;
-        double twentyPercentTotal = currentTotalBill * twentyPercentTip;
+        double twentyPercentTip = currentTotalBill * .20;
+        double twentyPercentTotal = currentTotalBill + twentyPercentTip;
 
         tipTenEditText.setText(String.format("%.02f", tenPercentTip));
-        tipTenEditText.setText(String.format("%.02f", tenPercentTotal));
+        totalTenEditText.setText(String.format("%.02f", tenPercentTotal));
 
         tipFifteenEditText.setText(String.format("%.02f", fifteenPercentTip));
-        tipFifteenEditText.setText(String.format("%.02f", fifteenPercentTotal));
+        totalFifteenEditText.setText(String.format("%.02f", fifteenPercentTotal));
 
         tipTwentyEditText.setText(String.format("%.02f", twentyPercentTip));
-        tipTwentyEditText.setText(String.format("%.02f", twentyPercentTotal));
+        totalTwentyEditText.setText(String.format("%.02f", twentyPercentTotal));
     }
 
     private void updateCustom() {
